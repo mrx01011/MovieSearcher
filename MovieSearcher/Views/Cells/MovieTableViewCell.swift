@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class MovieTableViewCell: UITableViewCell {
     //MARK: UI elements
@@ -64,5 +65,15 @@ final class MovieTableViewCell: UITableViewCell {
         mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
         mainStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
         mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
+    }
+    //MARK: Internal methods
+    func configureCell(with model: Movie) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath)"))
+            self.idLabel.text = "\(model.id)"
+            self.nameLabel.text = model.title
+            self.descriptionLabel.text = model.overview
+        }
     }
 }
