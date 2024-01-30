@@ -22,7 +22,7 @@ final class MovieListViewModel {
         networkManager.getMovieList(page: page) { [weak self] result, _  in
             guard let self,
                   let result = result else { return }
-            self.movies = result
+            self.movies += result
             self.handleResponse(response: result, success: true)
         }
     }
@@ -33,11 +33,20 @@ final class MovieListViewModel {
         }
     }
     
-    func numberOrRows() -> Int {
+    func getNumberOrRows() -> Int {
         return self.movies.count
     }
     
     func getMovie(index: Int) -> Movie? {
         return self.movies[index]
+    }
+    
+    func getPage() -> Int {
+        return self.page
+    }
+    
+    func loadNewPage() {
+        page += 1
+        callRequest()
     }
 }

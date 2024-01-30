@@ -60,24 +60,4 @@ final class NetworkManager: NetworkingService {
             dataTask.resume()
         }
     }
-    
-//    func getMovieList(page: Int, completionHandler: @escaping ([Movie]?) -> Void) {
-//        queue.async {
-//            guard let url = NSURL(string: "https://api.themoviedb.org/3/movie/popular?language=en-US&page=\(page)") else { return }
-//            let request = NSMutableURLRequest(url: url as URL,
-//                                              cachePolicy: .useProtocolCachePolicy,
-//                                              timeoutInterval: 10.0)
-//            request.httpMethod = "GET"
-//            request.allHTTPHeaderFields = self.headers
-//            
-//            let dataTask = self.session.dataTask(with: request as URLRequest, completionHandler: { (data, _, _) -> Void in
-//                guard let data = data,
-//                      let response = try? JSONDecoder().decode(Movies.self, from: data) else { return }
-//                DispatchQueue.main.async {
-//                    completionHandler(response.results)
-//                }
-//            })
-//            dataTask.resume()
-//        }
-//    }
 }

@@ -11,54 +11,53 @@ final class DetailMovieVC: UIViewController {
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     private let dateTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 24)
+        label.font = .boldSystemFont(ofSize: 20)
         label.text = "Release date"
         return label
     }()
     private let dateTextLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20)
-        label.text = "12/03/2001"
+        label.font = .systemFont(ofSize: 18)
         return label
     }()
     private let ratingTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 24)
+        label.font = .boldSystemFont(ofSize: 20)
         label.text = "⭐️ Rating"
         return label
     }()
     private let ratingTextLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20)
-        label.text = "5.2"
+        label.font = .systemFont(ofSize: 18)
         return label
     }()
     private let popularityTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 24)
+        label.font = .boldSystemFont(ofSize: 20)
         label.text = "❤️ Popularity"
         return label
     }()
     private let popularityTextLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20)
-        label.text = "10002"
+        label.font = .systemFont(ofSize: 18)
         return label
     }()
     private let descriptionTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 24)
+        label.font = .boldSystemFont(ofSize: 20)
         label.text = "Description"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private let descriptionTextLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20)
+        label.font = .systemFont(ofSize: 18)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -67,19 +66,21 @@ final class DetailMovieVC: UIViewController {
         stackView.axis = .vertical
         stackView.alignment = .top
         stackView.spacing = 10
+        stackView.distribution = .fillProportionally
         return stackView
     }()
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.distribution = .fill
+        stackView.distribution = .equalSpacing
         stackView.spacing = 10
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     //MARK: Initialization
-    init() {
+    init(with movie: Movie) {
         super.init(nibName: nil, bundle: nil)
+        configureView(with: movie)
     }
     
     required init?(coder: NSCoder) {
@@ -102,6 +103,9 @@ final class DetailMovieVC: UIViewController {
         view.addSubview(mainStackView)
         infoStackView.addArrangeSubviews([dateTitleLabel, dateTextLabel, ratingTitleLabel, ratingTextLabel, popularityTitleLabel, popularityTextLabel])
         mainStackView.addArrangeSubviews([movieImageView, infoStackView])
+        //imageView constraints
+        movieImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        movieImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
         //mainStack constraints
         mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
@@ -114,10 +118,17 @@ final class DetailMovieVC: UIViewController {
         descriptionTextLabel.topAnchor.constraint(equalTo: descriptionTitleLabel.bottomAnchor, constant: 10).isActive = true
         descriptionTextLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         descriptionTextLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
-        descriptionTextLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-    }
+        descriptionTextLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = false    }
     
-    //    private func configureView(with model: ) {
-    //
-    //    }
+    private func configureView(with model: Movie) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath)"))
+            self.title = model.title
+            self.dateTextLabel.text = model.releaseDate
+            self.ratingTextLabel.text = String(format: "%.01f", model.voteAverage)
+            self.popularityTextLabel.text = "\(Int(model.popularity))"
+            self.descriptionTextLabel.text = model.overview
+        }
+    }
 }
