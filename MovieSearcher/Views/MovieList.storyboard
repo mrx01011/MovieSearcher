@@ -17,31 +17,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="x8U-g7-7u1">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="COq-CO-ifs">
+                                <rect key="frame" x="178" y="407.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="x8U-g7-7u1">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MovieCell" id="wD7-s5-iXk" customClass="MovieTableViewCell" customModule="MovieSearcher" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wD7-s5-iXk" id="Eni-kT-axy">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="x8U-g7-7u1" secondAttribute="bottom" id="5Ca-x6-mAy"/>
-                            <constraint firstItem="x8U-g7-7u1" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="aEX-Ts-W0d"/>
-                            <constraint firstItem="x8U-g7-7u1" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="aOu-l4-aG6"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="x8U-g7-7u1" secondAttribute="trailing" id="mF6-ff-tUd"/>
+                            <constraint firstItem="COq-CO-ifs" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="2n2-bp-EJm"/>
+                            <constraint firstItem="x8U-g7-7u1" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="EzL-Jk-LDP"/>
+                            <constraint firstItem="COq-CO-ifs" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="VJr-CE-ErK"/>
+                            <constraint firstItem="x8U-g7-7u1" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="fmu-JO-rLy"/>
+                            <constraint firstItem="x8U-g7-7u1" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="g5R-E3-myD"/>
+                            <constraint firstItem="x8U-g7-7u1" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="nuw-xF-csJ"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="COq-CO-ifs" id="3W4-fm-ut2"/>
                         <outlet property="moviesTableView" destination="x8U-g7-7u1" id="N2A-B9-lFm"/>
                     </connections>
                 </viewController>
