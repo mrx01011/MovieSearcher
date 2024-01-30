@@ -24,6 +24,8 @@
 		FAD888B62B68DBFF00FCB834 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888B52B68DBFF00FCB834 /* NetworkingService.swift */; };
 		FAD888BA2B68EE2F00FCB834 /* MovieListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888B92B68EE2F00FCB834 /* MovieListViewModel.swift */; };
 		FAD888BD2B68F69A00FCB834 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = FAD888BC2B68F69A00FCB834 /* Kingfisher */; };
+		FAD888C42B692AB100FCB834 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888C32B692AB100FCB834 /* CoreDataManager.swift */; };
+		FAD888C62B69469200FCB834 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888C52B69469100FCB834 /* FavoritesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		FAD888B22B68DA2A00FCB834 /* Movies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movies.swift; sourceTree = "<group>"; };
 		FAD888B52B68DBFF00FCB834 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		FAD888B92B68EE2F00FCB834 /* MovieListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModel.swift; sourceTree = "<group>"; };
+		FAD888C32B692AB100FCB834 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		FAD888C52B69469100FCB834 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				FAD8889D2B67E43E00FCB834 /* Application */,
+				FAD888C22B692A7700FCB834 /* Managers */,
 				FAD888B42B68DA3800FCB834 /* Models */,
 				FAD888B82B68EE0E00FCB834 /* ViewModels */,
 				FAD888A32B67E78800FCB834 /* Views */,
@@ -141,7 +146,6 @@
 		FAD888B42B68DA3800FCB834 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FAD888B72B68DC0700FCB834 /* Networking */,
 				FAD888B22B68DA2A00FCB834 /* Movies.swift */,
 			);
 			path = Models;
@@ -159,8 +163,18 @@
 			isa = PBXGroup;
 			children = (
 				FAD888B92B68EE2F00FCB834 /* MovieListViewModel.swift */,
+				FAD888C52B69469100FCB834 /* FavoritesViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		FAD888C22B692A7700FCB834 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				FAD888B72B68DC0700FCB834 /* Networking */,
+				FAD888C32B692AB100FCB834 /* CoreDataManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +262,8 @@
 				FAD888A82B67EB2000FCB834 /* MovieTableViewCell.swift in Sources */,
 				FAD888AD2B68265C00FCB834 /* DetailMovieVC.swift in Sources */,
 				FAD888A12B67E5A000FCB834 /* FavoritesVC.swift in Sources */,
+				FAD888C42B692AB100FCB834 /* CoreDataManager.swift in Sources */,
+				FAD888C62B69469200FCB834 /* FavoritesViewModel.swift in Sources */,
 				FAD888872B67D65400FCB834 /* AppDelegate.swift in Sources */,
 				FAD888892B67D65400FCB834 /* SceneDelegate.swift in Sources */,
 				FAD888912B67D65400FCB834 /* MovieSearcher.xcdatamodeld in Sources */,

@@ -68,6 +68,17 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
             refreshData()
         }
     }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let config = UIContextMenuConfiguration(actionProvider:  { [weak self] _ in
+            let downloadAction = UIAction(title: "Add to favorites",state: .off) { _ in
+                guard let self else { return }
+                self.movieListViewModel.downloadMovie(at: indexPath)
+            }
+            return UIMenu(options: .displayInline, children: [downloadAction])
+        })
+        return config
+    }
 }
 //MARK: - Constatns
 extension ListVC {

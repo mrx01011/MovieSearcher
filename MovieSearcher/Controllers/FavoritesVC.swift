@@ -8,10 +8,12 @@
 import UIKit
 
 final class FavoritesVC: UIViewController {
+    private let favoritesViewModel = FavoritesViewModel()
+    private var favorites = [Movie]()
     //MARK: UI elements
     private let favoritesTableView: UITableView = {
         let tableView = UITableView()
-        tableView.rowHeight = UITableView.automaticDimension
+        tableView.rowHeight = 100
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -22,10 +24,21 @@ final class FavoritesVC: UIViewController {
         defaultConfigurations()
         setupUI()
         setupDelegates()
+        refreshData()
     }
     //MARK: Private methods
     private func defaultConfigurations() {
         view.backgroundColor = .white
+        title = "Favorites"
+    }
+    
+    private func refreshData() {
+        self.favoritesViewModel.isMovieFavorited = { [weak self] (_, success) in
+            guard let self else { return }
+            if success {
+                self.favoritesTableView.reloadData()
+            }
+        }
     }
     
     private func setupUI() {
@@ -45,13 +58,29 @@ final class FavoritesVC: UIViewController {
 //MARK: - UITableViewDelegate, UITableViewDataSource
 extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return favoritesViewModel.getNumberOrRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as? MovieTableViewCell else { return UITableViewCell() }
-        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as? MovieTableViewCell,
+              let movieData = favoritesViewModel.getMovie(index: indexPath.row) else { return UITableViewCell() }
+        cell.configureCell(with: movieData)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            tableView.beginUpdates()
+            favoritesViewModel.deleteMovie(at: indexPath)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+        default: break
+        }
     }
 }
 //MARK: - Constants
