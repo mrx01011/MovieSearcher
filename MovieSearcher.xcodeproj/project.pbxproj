@@ -20,6 +20,8 @@
 		FAD888AB2B67FD9600FCB834 /* StackView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888AA2B67FD9600FCB834 /* StackView + Extension.swift */; };
 		FAD888AD2B68265C00FCB834 /* DetailMovieVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888AC2B68265C00FCB834 /* DetailMovieVC.swift */; };
 		FAD888B12B68D71800FCB834 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = FAD888B02B68D71800FCB834 /* .gitignore */; };
+		FAD888B32B68DA2A00FCB834 /* Movies.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888B22B68DA2A00FCB834 /* Movies.swift */; };
+		FAD888B62B68DBFF00FCB834 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888B52B68DBFF00FCB834 /* NetworkingService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		FAD888AA2B67FD9600FCB834 /* StackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView + Extension.swift"; sourceTree = "<group>"; };
 		FAD888AC2B68265C00FCB834 /* DetailMovieVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieVC.swift; sourceTree = "<group>"; };
 		FAD888B02B68D71800FCB834 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		FAD888B22B68DA2A00FCB834 /* Movies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movies.swift; sourceTree = "<group>"; };
+		FAD888B52B68DBFF00FCB834 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,8 +76,10 @@
 			isa = PBXGroup;
 			children = (
 				FAD8889D2B67E43E00FCB834 /* Application */,
+				FAD888B42B68DA3800FCB834 /* Models */,
 				FAD888A32B67E78800FCB834 /* Views */,
 				FAD888A22B67E68B00FCB834 /* Controllers */,
+				FAD888A92B67FD8600FCB834 /* Extensions */,
 				FAD888922B67D65500FCB834 /* Assets.xcassets */,
 				FAD888942B67D65500FCB834 /* LaunchScreen.storyboard */,
 				FAD888972B67D65500FCB834 /* Info.plist */,
@@ -98,7 +104,6 @@
 				FAD888A02B67E5A000FCB834 /* FavoritesVC.swift */,
 				FAD888AC2B68265C00FCB834 /* DetailMovieVC.swift */,
 				FAD8889E2B67E51900FCB834 /* ListVC.swift */,
-				FAD888A92B67FD8600FCB834 /* Extensions */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -126,6 +131,23 @@
 				FAD888AA2B67FD9600FCB834 /* StackView + Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FAD888B42B68DA3800FCB834 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FAD888B72B68DC0700FCB834 /* Networking */,
+				FAD888B22B68DA2A00FCB834 /* Movies.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FAD888B72B68DC0700FCB834 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				FAD888B52B68DBFF00FCB834 /* NetworkingService.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +222,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAD888B62B68DBFF00FCB834 /* NetworkingService.swift in Sources */,
+				FAD888B32B68DA2A00FCB834 /* Movies.swift in Sources */,
 				FAD8888B2B67D65400FCB834 /* TabBarController.swift in Sources */,
 				FAD8889F2B67E51900FCB834 /* ListVC.swift in Sources */,
 				FAD888A82B67EB2000FCB834 /* MovieTableViewCell.swift in Sources */,
