@@ -7,15 +7,16 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
 final class MovieTableViewCell: UITableViewCell {
     //MARK: UI elements
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.setContentCompressionResistancePriority(.init(1000), for: .vertical)
-        imageView.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
+        imageView.snp.makeConstraints {
+            $0.height.width.equalTo(100)
+        }
         return imageView
     }()
     private let idLabel: UILabel = {
@@ -26,11 +27,13 @@ final class MovieTableViewCell: UITableViewCell {
     }()
     private let nameLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .black
         label.font = .boldSystemFont(ofSize: 14)
         return label
     }()
     private let descriptionLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .black
         label.font = .systemFont(ofSize: 12)
         label.numberOfLines = 3
         return label
@@ -47,13 +50,13 @@ final class MovieTableViewCell: UITableViewCell {
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.spacing = 10
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     //MARK: Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubviews()
+        defaultConfigurations()
     }
     
     required init?(coder: NSCoder) {
@@ -68,19 +71,19 @@ final class MovieTableViewCell: UITableViewCell {
         descriptionLabel.text = nil
     }
     //MARK: Private methods
+    private func defaultConfigurations() {
+        backgroundColor = .white
+    }
+    
     private func setupSubviews() {
         contentView.addSubview(mainStackView)
         infoStackView.addArrangeSubviews([idLabel, nameLabel, descriptionLabel])
         mainStackView.addArrangeSubviews([movieImageView, infoStackView])
         
-        NSLayoutConstraint.activate([
-            movieImageView.heightAnchor.constraint(equalToConstant: 100),
-            movieImageView.widthAnchor.constraint(equalToConstant: 100),
-            mainStackView.topAnchor.constraint(equalTo: self.topAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            mainStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
-        ])
+        mainStackView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(16).priority(.high)
+        }
     }
     //MARK: Internal methods
     func configureCell(with model: Movie) {

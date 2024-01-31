@@ -11,7 +11,7 @@ final class FavoritesViewModel {
     private let networkManager: NetworkManager
     private var _favorites = Dynamic<[Movie]>([])
     private var _genres = Dynamic<[Genre]>([])
-
+    
     var favorites: Dynamic<[Movie]> {
         return _favorites
     }

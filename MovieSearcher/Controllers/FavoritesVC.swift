@@ -12,9 +12,8 @@ final class FavoritesVC: UIViewController {
     //MARK: UI elements
     private let favoritesTableView: UITableView = {
         let tableView = UITableView()
-        tableView.rowHeight = 100
+        tableView.backgroundColor = .white
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     //MARK: Lifecycle
@@ -40,12 +39,9 @@ final class FavoritesVC: UIViewController {
     
     private func setupUI() {
         view.addSubview(favoritesTableView)
-        NSLayoutConstraint.activate([
-            favoritesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            favoritesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
-            favoritesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            favoritesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
-        ])
+        favoritesTableView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     private func setupDelegates() {
