@@ -71,7 +71,7 @@ final class MovieTableViewCell: UITableViewCell {
         infoStackView.addArrangeSubviews([idLabel, nameLabel, descriptionLabel])
         mainStackView.addArrangeSubviews([movieImageView, infoStackView])
         
-        movieImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        movieImageView.heightAnchor.constraint(equalToConstant: 100).priority = .init(999)
         movieImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         mainStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true

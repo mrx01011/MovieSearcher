@@ -49,4 +49,15 @@ final class MovieListViewModel {
         page += 1
         callRequest()
     }
+    
+    func downloadMovie(at indexPath: IndexPath) {
+        CoreDataManager.shared.saveMovie(model: movies[indexPath.row]) { result in
+            switch result {
+            case .success():
+                NotificationCenter.default.post(name: NSNotification.Name("addedToFavorites"), object: nil)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
