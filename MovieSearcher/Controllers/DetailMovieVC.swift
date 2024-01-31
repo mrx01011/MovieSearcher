@@ -6,87 +6,45 @@
 //
 
 import UIKit
+import SnapKit
 
 final class DetailMovieVC: UIViewController {
+    private let scrollView = UIScrollView()
+    private let contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    private let dateTitleLabel: UILabel = {
+    private let backdropImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 20)
-        label.text = "Release date"
-        return label
-    }()
-    private let dateTextLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
-        return label
-    }()
-    private let ratingTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
-        label.text = "⭐️ Rating"
-        return label
-    }()
-    private let ratingTextLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
-        return label
-    }()
-    private let popularityTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
-        label.text = "❤️ Popularity"
-        return label
-    }()
-    private let popularityTextLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
-        return label
-    }()
-    private let genresTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
-        label.text = "🎭 Genres"
-        return label
-    }()
-    private let genresTextLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
+        label.textColor = .black
         label.numberOfLines = 0
         return label
     }()
-    private let descriptionTitleLabel: UILabel = {
+    private let infoLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
-        label.text = "Description"
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 16)
+        label.numberOfLines = 0
+        label.textColor = .black
         return label
     }()
     private let descriptionTextLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .black
         label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    private let infoStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .top
-        stackView.distribution = .fill
-        return stackView
-    }()
-    private let mainStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 10
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
     }()
     //MARK: Initialization
     init(with movie: Movie, genres: [Genre]) {
@@ -106,46 +64,78 @@ final class DetailMovieVC: UIViewController {
     //MARK: Private methods
     private func defaultConfigurations() {
         view.backgroundColor = .white
+        contentView.backgroundColor = .white
+        title = "Details"
     }
     
     private func setupUI() {
-        view.addSubview(descriptionTitleLabel)
-        view.addSubview(descriptionTextLabel)
-        view.addSubview(mainStackView)
-        infoStackView.addArrangeSubviews([dateTitleLabel, dateTextLabel, ratingTitleLabel, ratingTextLabel, popularityTitleLabel, popularityTextLabel, genresTitleLabel, genresTextLabel])
-        mainStackView.addArrangeSubviews([movieImageView, infoStackView])
-        //imageView constraints
-        movieImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        movieImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        //mainStack constraints
-        mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-        mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
-        mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
-        //description title constraints
-        descriptionTitleLabel.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 10).isActive = true
-        descriptionTitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
-        descriptionTitleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
-        //description text constraints
-        descriptionTextLabel.topAnchor.constraint(equalTo: descriptionTitleLabel.bottomAnchor, constant: 10).isActive = true
-        descriptionTextLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
-        descriptionTextLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
-        descriptionTextLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = false
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints {
+            $0.edges.width.equalToSuperview()
+            $0.height.equalToSuperview().priority(250)
+        }
+        //backdrop
+        contentView.addSubview(backdropImageView)
+        backdropImageView.snp.makeConstraints {
+            $0.top.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(250)
+        }
+        //poster
+        backdropImageView.addSubview(movieImageView)
+        movieImageView.snp.makeConstraints {
+            $0.top.equalTo(backdropImageView.snp.centerY)
+            $0.leading.equalToSuperview().offset(Constants.Offsets.sidePadding)
+            $0.height.equalTo(150)
+            $0.width.equalTo(100)
+        }
+        //title
+        contentView.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints {
+            $0.top.equalTo(movieImageView.snp.bottom).offset(Constants.Offsets.verticalSpacing)
+            $0.horizontalEdges.equalToSuperview().inset(Constants.Offsets.sidePadding)
+        }
+        //info
+        contentView.addSubview(infoLabel)
+        infoLabel.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.Offsets.verticalSpacing)
+            $0.horizontalEdges.equalToSuperview().inset(Constants.Offsets.sidePadding)
+        }
+        //description
+        contentView.addSubview(descriptionTextLabel)
+        descriptionTextLabel.snp.makeConstraints {
+            $0.top.equalTo(infoLabel.snp.bottom).offset(Constants.Offsets.verticalSpacing)
+            $0.horizontalEdges.equalToSuperview().inset(Constants.Offsets.sidePadding)
+            $0.bottom.equalToSuperview()
+        }
     }
     
     private func configureView(with model: Movie, genres: [Genre]) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            self.movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath)"))
-            self.title = model.title
-            self.dateTextLabel.text = model.releaseDate
-            self.ratingTextLabel.text = String(format: "%.01f", model.voteAverage)
-            self.popularityTextLabel.text = "\(Int(model.popularity))"
-            self.descriptionTextLabel.text = model.overview
             let genreNames: [String] = model.genreIDS.compactMap { genreID in
                 return genres.first { $0.id == genreID }?.name
             }
             let genresText = genreNames.joined(separator: ", ")
-            self.genresTextLabel.text = genresText
+            
+            self.movieImageView.kf.setImage(with: URL(string: Constants.baseURL + model.posterPath))
+            self.backdropImageView.kf.setImage(with: URL(string: Constants.baseURL + model.backdropPath))
+            self.nameLabel.text = model.title
+            self.infoLabel.text = genresText + " • " + model.releaseDate + " • ⭐️ " + String(format: "%.01f", model.voteAverage) + " •  ❤️ " + "\(Int(model.popularity))"
+            self.descriptionTextLabel.text = model.overview
+        }
+    }
+}
+//MARK: - Constants
+extension DetailMovieVC {
+    enum Constants {
+        static let baseURL = "https://image.tmdb.org/t/p/w500"
+        enum Offsets {
+            static let sidePadding = 16
+            static let verticalSpacing = 10
         }
     }
 }
