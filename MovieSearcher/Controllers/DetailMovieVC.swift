@@ -129,7 +129,8 @@ final class DetailMovieVC: UIViewController {
         descriptionTextLabel.topAnchor.constraint(equalTo: descriptionTitleLabel.bottomAnchor, constant: 10).isActive = true
         descriptionTextLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         descriptionTextLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
-        descriptionTextLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = false    }
+        descriptionTextLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = false
+    }
     
     private func configureView(with model: Movie, genres: [Genre]) {
         DispatchQueue.main.async { [weak self] in
@@ -145,7 +146,6 @@ final class DetailMovieVC: UIViewController {
             }
             let genresText = genreNames.joined(separator: ", ")
             self.genresTextLabel.text = genresText
-
         }
     }
 }

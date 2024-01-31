@@ -27,6 +27,7 @@
 		FAD888C42B692AB100FCB834 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888C32B692AB100FCB834 /* CoreDataManager.swift */; };
 		FAD888C62B69469200FCB834 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888C52B69469100FCB834 /* FavoritesViewModel.swift */; };
 		FAD888C82B6A43DE00FCB834 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888C72B6A43DE00FCB834 /* Genres.swift */; };
+		FAD888CB2B6A753D00FCB834 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888CA2B6A753D00FCB834 /* Dynamic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		FAD888C32B692AB100FCB834 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		FAD888C52B69469100FCB834 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		FAD888C72B6A43DE00FCB834 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
+		FAD888CA2B6A753D00FCB834 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,9 +115,9 @@
 			isa = PBXGroup;
 			children = (
 				FAD8888A2B67D65400FCB834 /* TabBarController.swift */,
+				FAD8889E2B67E51900FCB834 /* ListVC.swift */,
 				FAD888A02B67E5A000FCB834 /* FavoritesVC.swift */,
 				FAD888AC2B68265C00FCB834 /* DetailMovieVC.swift */,
-				FAD8889E2B67E51900FCB834 /* ListVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -165,6 +167,7 @@
 		FAD888B82B68EE0E00FCB834 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				FAD888C92B6A752F00FCB834 /* Bindings */,
 				FAD888B92B68EE2F00FCB834 /* MovieListViewModel.swift */,
 				FAD888C52B69469100FCB834 /* FavoritesViewModel.swift */,
 			);
@@ -178,6 +181,14 @@
 				FAD888C32B692AB100FCB834 /* CoreDataManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		FAD888C92B6A752F00FCB834 /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				FAD888CA2B6A753D00FCB834 /* Dynamic.swift */,
+			);
+			path = Bindings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,6 +282,7 @@
 				FAD888872B67D65400FCB834 /* AppDelegate.swift in Sources */,
 				FAD888892B67D65400FCB834 /* SceneDelegate.swift in Sources */,
 				FAD888912B67D65400FCB834 /* MovieSearcher.xcdatamodeld in Sources */,
+				FAD888CB2B6A753D00FCB834 /* Dynamic.swift in Sources */,
 				FAD888AB2B67FD9600FCB834 /* StackView + Extension.swift in Sources */,
 				FAD888BA2B68EE2F00FCB834 /* MovieListViewModel.swift in Sources */,
 			);

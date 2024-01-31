@@ -17,7 +17,7 @@ final class ListVC: UIViewController {
         super.viewDidLoad()
         defaultConfigurations()
         setupDelegates()
-        refreshData()
+        setupBindings()
     }
     //MARK: Private methods
     private func defaultConfigurations() {
@@ -31,15 +31,10 @@ final class ListVC: UIViewController {
         moviesTableView.dataSource = self
     }
     
-    private func refreshData() {
-        activityIndicator.startAnimating()
-        self.movieListViewModel.isMoviesLoaded = { [weak self] (_, success) in
-            guard let self else { return }
-            if success {
-                self.moviesTableView.reloadData()
-            }
+    private func setupBindings() {
+        movieListViewModel.movies.bind { [weak self] _ in
+            self?.moviesTableView.reloadData()
         }
-        activityIndicator.stopAnimating()
     }
 }
 //MARK: - UITableViewDelegate, UITableViewDataSource
@@ -58,21 +53,20 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let movieData = movieListViewModel.getMovie(index: indexPath.row) else { return }
-        let genres = movieListViewModel.getGenres()
+        let genres = movieListViewModel.genres.value
         let detailVC = DetailMovieVC(with: movieData, genres: genres)
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if Int(scrollView.contentOffset.y) >= Int(1.8 * moviesTableView.bounds.height) * movieListViewModel.getPage() {
+        if Int(scrollView.contentOffset.y) >= Int(2 * moviesTableView.bounds.height) * movieListViewModel.getPage() {
             movieListViewModel.loadNewPage()
-            refreshData()
         }
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let config = UIContextMenuConfiguration(actionProvider:  { [weak self] _ in
-            let downloadAction = UIAction(title: "Add to favorites",state: .off) { _ in
+        let config = UIContextMenuConfiguration(actionProvider: { [weak self] _ in
+            let downloadAction = UIAction(title: "Add to favorites", state: .off) { _ in
                 guard let self else { return }
                 self.movieListViewModel.saveMovie(at: indexPath)
             }

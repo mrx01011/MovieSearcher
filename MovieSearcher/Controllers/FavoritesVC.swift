@@ -23,7 +23,7 @@ final class FavoritesVC: UIViewController {
         defaultConfigurations()
         setupUI()
         setupDelegates()
-        refreshData()
+        setupBindings()
     }
     //MARK: Private methods
     private func defaultConfigurations() {
@@ -31,22 +31,21 @@ final class FavoritesVC: UIViewController {
         title = "Favorites"
     }
     
-    private func refreshData() {
-        self.favoritesViewModel.isMovieFavorited = { [weak self] (_, success) in
+    private func setupBindings() {
+        favoritesViewModel.favorites.bind { [weak self] _ in
             guard let self else { return }
-            if success {
-                self.favoritesTableView.reloadData()
-            }
+            self.favoritesTableView.reloadData()
         }
     }
     
     private func setupUI() {
         view.addSubview(favoritesTableView)
-        
-        favoritesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-        favoritesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        favoritesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
-        favoritesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
+        NSLayoutConstraint.activate([
+            favoritesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            favoritesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            favoritesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            favoritesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
+        ])
     }
     
     private func setupDelegates() {
@@ -74,7 +73,7 @@ extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let movieData = favoritesViewModel.getMovie(index: indexPath.row) else { return }
-        let genres = favoritesViewModel.getGenres()
+        let genres = favoritesViewModel.gengres.value
         let detailVC = DetailMovieVC(with: movieData, genres: genres)
         navigationController?.pushViewController(detailVC, animated: true)
     }

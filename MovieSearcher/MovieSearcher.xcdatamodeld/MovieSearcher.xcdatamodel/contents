@@ -3,7 +3,6 @@
     <entity name="GenreItem" representedClassName="GenreItem" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieItem" inverseName="relationship" inverseEntity="MovieItem"/>
     </entity>
     <entity name="MovieItem" representedClassName="MovieItem" syncable="YES" codeGenerationType="class">
         <attribute name="genresIDS" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Int]"/>
@@ -14,6 +13,5 @@
         <attribute name="releaseDate" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="voteAverage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GenreItem" inverseName="relationship" inverseEntity="GenreItem"/>
     </entity>
 </model>
