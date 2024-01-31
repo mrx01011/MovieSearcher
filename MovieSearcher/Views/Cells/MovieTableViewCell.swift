@@ -14,6 +14,8 @@ final class MovieTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.setContentCompressionResistancePriority(.init(1000), for: .vertical)
+        imageView.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         return imageView
     }()
     private let idLabel: UILabel = {
@@ -51,7 +53,7 @@ final class MovieTableViewCell: UITableViewCell {
     //MARK: Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupSubview()
+        setupSubviews()
     }
     
     required init?(coder: NSCoder) {
@@ -66,26 +68,25 @@ final class MovieTableViewCell: UITableViewCell {
         descriptionLabel.text = nil
     }
     //MARK: Private methods
-    private func setupSubview() {
+    private func setupSubviews() {
         contentView.addSubview(mainStackView)
         infoStackView.addArrangeSubviews([idLabel, nameLabel, descriptionLabel])
         mainStackView.addArrangeSubviews([movieImageView, infoStackView])
         
-        movieImageView.heightAnchor.constraint(equalToConstant: 100).priority = .init(999)
-        movieImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        mainStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-        mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
-        mainStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16).isActive = true
-        mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
+        NSLayoutConstraint.activate([
+            movieImageView.heightAnchor.constraint(equalToConstant: 100),
+            movieImageView.widthAnchor.constraint(equalToConstant: 100),
+            mainStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+        ])
     }
     //MARK: Internal methods
     func configureCell(with model: Movie) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath)"))
-            self.idLabel.text = "\(model.id)"
-            self.nameLabel.text = model.title
-            self.descriptionLabel.text = model.overview
-        }
+        movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath)"))
+        idLabel.text = "\(model.id)"
+        nameLabel.text = model.title
+        descriptionLabel.text = model.overview
     }
 }

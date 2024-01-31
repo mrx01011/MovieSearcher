@@ -145,7 +145,6 @@ final class DetailMovieVC: UIViewController {
             }
             let genresText = genreNames.joined(separator: ", ")
             self.genresTextLabel.text = genresText
-
         }
     }
 }

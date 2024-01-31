@@ -23,7 +23,7 @@ final class FavoritesVC: UIViewController {
         defaultConfigurations()
         setupUI()
         setupDelegates()
-        refreshData()
+        setupViewModelCallbacks()
     }
     //MARK: Private methods
     private func defaultConfigurations() {
@@ -31,8 +31,8 @@ final class FavoritesVC: UIViewController {
         title = "Favorites"
     }
     
-    private func refreshData() {
-        self.favoritesViewModel.isMovieFavorited = { [weak self] (_, success) in
+    private func setupViewModelCallbacks() {
+        self.favoritesViewModel.onMoviesFavorited = { [weak self] (_, success) in
             guard let self else { return }
             if success {
                 self.favoritesTableView.reloadData()
@@ -42,11 +42,12 @@ final class FavoritesVC: UIViewController {
     
     private func setupUI() {
         view.addSubview(favoritesTableView)
-        
-        favoritesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-        favoritesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        favoritesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
-        favoritesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
+        NSLayoutConstraint.activate([
+            favoritesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            favoritesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            favoritesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            favoritesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
+        ])
     }
     
     private func setupDelegates() {

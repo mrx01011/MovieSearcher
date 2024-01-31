@@ -11,7 +11,7 @@ final class FavoritesViewModel {
     private let networkManager = NetworkManager()
     private var favorites = [Movie]()
     
-    var isMovieFavorited: (([Movie]?, Bool) -> Void)?
+    var onMoviesFavorited: (([Movie]?, Bool) -> Void)?
     
     init() {
         fetchData()
@@ -19,7 +19,7 @@ final class FavoritesViewModel {
     }
     
     private func handleResponse(response: [Movie]?, success: Bool) {
-        if let moviesFavorited = self.isMovieFavorited {
+        if let moviesFavorited = self.onMoviesFavorited {
             moviesFavorited(response, success)
         }
     }

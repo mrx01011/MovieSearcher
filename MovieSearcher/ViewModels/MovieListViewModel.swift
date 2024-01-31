@@ -13,7 +13,7 @@ final class MovieListViewModel {
     private var genres = [Genre]()
     private var page = 1
     
-    var isMoviesLoaded: (([Movie]?, Bool) -> Void)?
+    var onMoviesLoaded: (([Movie]?, Bool) -> Void)?
     
     init() {
         callMovies()
@@ -21,7 +21,7 @@ final class MovieListViewModel {
     }
     
     private func handleResponse(response: [Movie]?, success: Bool) {
-        if let moviesLoaded = self.isMoviesLoaded {
+        if let moviesLoaded = self.onMoviesLoaded {
             moviesLoaded(response, success)
         }
     }

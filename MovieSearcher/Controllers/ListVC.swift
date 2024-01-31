@@ -17,7 +17,7 @@ final class ListVC: UIViewController {
         super.viewDidLoad()
         defaultConfigurations()
         setupDelegates()
-        refreshData()
+        loadMoviesData()
     }
     //MARK: Private methods
     private func defaultConfigurations() {
@@ -31,15 +31,15 @@ final class ListVC: UIViewController {
         moviesTableView.dataSource = self
     }
     
-    private func refreshData() {
+    private func loadMoviesData() {
         activityIndicator.startAnimating()
-        self.movieListViewModel.isMoviesLoaded = { [weak self] (_, success) in
+        self.movieListViewModel.onMoviesLoaded = { [weak self] (_, success) in
             guard let self else { return }
             if success {
                 self.moviesTableView.reloadData()
             }
+            activityIndicator.stopAnimating()
         }
-        activityIndicator.stopAnimating()
     }
 }
 //MARK: - UITableViewDelegate, UITableViewDataSource
@@ -66,7 +66,7 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if Int(scrollView.contentOffset.y) >= Int(1.8 * moviesTableView.bounds.height) * movieListViewModel.getPage() {
             movieListViewModel.loadNewPage()
-            refreshData()
+            loadMoviesData()
         }
     }
     
