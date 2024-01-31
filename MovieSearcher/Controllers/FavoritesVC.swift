@@ -9,7 +9,6 @@ import UIKit
 
 final class FavoritesVC: UIViewController {
     private let favoritesViewModel = FavoritesViewModel()
-    private var favorites = [Movie]()
     //MARK: UI elements
     private let favoritesTableView: UITableView = {
         let tableView = UITableView()

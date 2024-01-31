@@ -23,7 +23,7 @@ final class CoreDataManager {
 
         do {
             if let existingMovieItem = try context.fetch(fetchRequest).first {
-                print("Duplicate")
+                print("Duplicate - \(String(describing: existingMovieItem.title))")
             } else {
                 let newItem = MovieItem(context: context)
                 newItem.id = Int32(model.id)
@@ -33,6 +33,7 @@ final class CoreDataManager {
                 newItem.overview = model.overview
                 newItem.releaseDate = model.releaseDate
                 newItem.voteAverage = model.voteAverage
+                newItem.genresIDS = model.genreIDS
             }
             try context.save()
             completion(.success(()))
@@ -60,7 +61,8 @@ final class CoreDataManager {
                     posterPath: movieItem.posterPath ?? "",
                     releaseDate: movieItem.releaseDate ?? "",
                     title: movieItem.title ?? "",
-                    voteAverage: movieItem.voteAverage
+                    voteAverage: movieItem.voteAverage, 
+                    genreIDS: movieItem.genresIDS ?? []
                 )
             }
             completion(.success(movies))
