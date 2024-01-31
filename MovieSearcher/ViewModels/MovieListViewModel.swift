@@ -8,63 +8,59 @@
 import Foundation
 
 final class MovieListViewModel {
-    private let networkManager = NetworkManager()
-    private var movies = [Movie]()
-    private var genres = [Genre]()
+    private let networkManager: NetworkManager
+    private var _movies = Dynamic<[Movie]>([])
+    private var _genres = Dynamic<[Genre]>([])
     private var page = 1
     
-    var onMoviesLoaded: (([Movie]?, Bool) -> Void)?
-    
-    init() {
-        callMovies()
-        callGenres()
+    var movies: Dynamic<[Movie]> {
+        return _movies
     }
     
-    private func handleResponse(response: [Movie]?, success: Bool) {
-        if let moviesLoaded = self.onMoviesLoaded {
-            moviesLoaded(response, success)
-        }
+    var genres: Dynamic<[Genre]> {
+        return _genres
     }
     
-    func callMovies() {
+    init(networkManager: NetworkManager = NetworkManager()) {
+        self.networkManager = networkManager
+        fetchMovie()
+        fetchGenres()
+    }
+    
+    private func fetchMovie() {
         networkManager.getMovieList(page: page) { [weak self] result, _  in
-            guard let self, let result = result else { return }
-            self.movies += result
-            self.handleResponse(response: result, success: true)
+            guard let self = self, let result = result else { return }
+            _movies.value += result
         }
     }
     
-    func callGenres() {
+    private func fetchGenres() {
         networkManager.getGenresOfMovies { [weak self] result, _ in
-            guard let self, let result = result else { return }
-            self.genres = result
+            guard let self = self, let result = result else { return }
+            self._genres.value = result
             self.saveGenres()
         }
     }
     
     func getNumberOrRows() -> Int {
-        return self.movies.count
+        return _movies.value.count
     }
     
     func getMovie(index: Int) -> Movie? {
-        return self.movies[index]
-    }
-    
-    func getGenres() -> [Genre] {
-        return self.genres
+        return _movies.value[index]
     }
     
     func getPage() -> Int {
-        return self.page
+        return page
     }
     
     func loadNewPage() {
         page += 1
-        callMovies()
+        fetchMovie()
     }
     
     func saveMovie(at indexPath: IndexPath) {
-        CoreDataManager.shared.saveMovie(model: movies[indexPath.row]) { result in
+        CoreDataManager.shared.saveMovie(model: _movies.value[indexPath.row]) { result in
             switch result {
             case .success():
                 NotificationCenter.default.post(name: NSNotification.Name("addedToFavorites"), object: nil)
@@ -75,10 +71,10 @@ final class MovieListViewModel {
     }
     
     func saveGenres() {
-        CoreDataManager.shared.saveGenres(models: genres) { result in
+        CoreDataManager.shared.saveGenres(models: _genres.value) { result in
             switch result {
             case .success():
-                print("Genres was saved")
+                print("Genres were saved")
             case .failure(let error):
                 print(error.localizedDescription)
             }

@@ -115,9 +115,9 @@
 			isa = PBXGroup;
 			children = (
 				FAD8888A2B67D65400FCB834 /* TabBarController.swift */,
+				FAD8889E2B67E51900FCB834 /* ListVC.swift */,
 				FAD888A02B67E5A000FCB834 /* FavoritesVC.swift */,
 				FAD888AC2B68265C00FCB834 /* DetailMovieVC.swift */,
-				FAD8889E2B67E51900FCB834 /* ListVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

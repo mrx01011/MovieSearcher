@@ -23,7 +23,7 @@ final class FavoritesVC: UIViewController {
         defaultConfigurations()
         setupUI()
         setupDelegates()
-        setupViewModelCallbacks()
+        setupBindings()
     }
     //MARK: Private methods
     private func defaultConfigurations() {
@@ -31,12 +31,10 @@ final class FavoritesVC: UIViewController {
         title = "Favorites"
     }
     
-    private func setupViewModelCallbacks() {
-        self.favoritesViewModel.onMoviesFavorited = { [weak self] (_, success) in
+    private func setupBindings() {
+        favoritesViewModel.favorites.bind { [weak self] _ in
             guard let self else { return }
-            if success {
-                self.favoritesTableView.reloadData()
-            }
+            self.favoritesTableView.reloadData()
         }
     }
     
@@ -75,7 +73,7 @@ extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let movieData = favoritesViewModel.getMovie(index: indexPath.row) else { return }
-        let genres = favoritesViewModel.getGenres()
+        let genres = favoritesViewModel.gengres.value
         let detailVC = DetailMovieVC(with: movieData, genres: genres)
         navigationController?.pushViewController(detailVC, animated: true)
     }
