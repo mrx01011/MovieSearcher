@@ -36,6 +36,7 @@ final class CoreDataManager {
                 newItem.releaseDate = model.releaseDate
                 newItem.voteAverage = model.voteAverage
                 newItem.genresIDS = model.genreIDS
+                newItem.backdropPath = model.backdropPath
             }
             try context.save()
             completion(.success(()))
@@ -60,7 +61,8 @@ final class CoreDataManager {
                     releaseDate: movieItem.releaseDate ?? "",
                     title: movieItem.title ?? "",
                     voteAverage: movieItem.voteAverage,
-                    genreIDS: movieItem.genresIDS ?? []
+                    genreIDS: movieItem.genresIDS ?? [],
+                    backdropPath: movieItem.backdropPath ?? ""
                 )
             }
             completion(.success(movies))

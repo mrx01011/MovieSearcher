@@ -12,7 +12,8 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabBarItems()
-        tabBar.tintColor = .label
+        tabBar.tintColor = .black
+        tabBar.unselectedItemTintColor = .lightGray
     }
     
     private func configureTabBarItems() {
