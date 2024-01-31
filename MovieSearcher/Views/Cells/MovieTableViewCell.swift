@@ -69,6 +69,7 @@ final class MovieTableViewCell: UITableViewCell {
         idLabel.text = nil
         nameLabel.text = nil
         descriptionLabel.text = nil
+        ImageCache.default.clearMemoryCache()
     }
     //MARK: Private methods
     private func defaultConfigurations() {
@@ -87,9 +88,12 @@ final class MovieTableViewCell: UITableViewCell {
     }
     //MARK: Internal methods
     func configureCell(with model: Movie) {
-        movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath)"))
-        idLabel.text = "\(model.id)"
-        nameLabel.text = model.title
-        descriptionLabel.text = model.overview
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath)"))
+            idLabel.text = "\(model.id)"
+            nameLabel.text = model.title
+            descriptionLabel.text = model.overview
+        }
     }
 }
