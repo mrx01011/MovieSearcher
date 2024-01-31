@@ -58,7 +58,8 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let movieData = movieListViewModel.getMovie(index: indexPath.row) else { return }
-        let detailVC = DetailMovieVC(with: movieData)
+        let genres = movieListViewModel.getGenres()
+        let detailVC = DetailMovieVC(with: movieData, genres: genres)
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
@@ -73,7 +74,7 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
         let config = UIContextMenuConfiguration(actionProvider:  { [weak self] _ in
             let downloadAction = UIAction(title: "Add to favorites",state: .off) { _ in
                 guard let self else { return }
-                self.movieListViewModel.downloadMovie(at: indexPath)
+                self.movieListViewModel.saveMovie(at: indexPath)
             }
             return UIMenu(options: .displayInline, children: [downloadAction])
         })

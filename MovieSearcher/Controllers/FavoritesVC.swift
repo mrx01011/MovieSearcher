@@ -71,6 +71,14 @@ extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
         return .delete
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let movieData = favoritesViewModel.getMovie(index: indexPath.row) else { return }
+        let genres = favoritesViewModel.getGenres()
+        let detailVC = DetailMovieVC(with: movieData, genres: genres)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:

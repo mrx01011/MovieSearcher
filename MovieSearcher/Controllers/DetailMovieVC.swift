@@ -47,6 +47,18 @@ final class DetailMovieVC: UIViewController {
         label.font = .systemFont(ofSize: 18)
         return label
     }()
+    private let genresTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 20)
+        label.text = "🎭 Genres"
+        return label
+    }()
+    private let genresTextLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18)
+        label.numberOfLines = 0
+        return label
+    }()
     private let descriptionTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 20)
@@ -65,8 +77,7 @@ final class DetailMovieVC: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .top
-        stackView.spacing = 10
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         return stackView
     }()
     private let mainStackView: UIStackView = {
@@ -78,9 +89,9 @@ final class DetailMovieVC: UIViewController {
         return stackView
     }()
     //MARK: Initialization
-    init(with movie: Movie) {
+    init(with movie: Movie, genres: [Genre]) {
         super.init(nibName: nil, bundle: nil)
-        configureView(with: movie)
+        configureView(with: movie, genres: genres)
     }
     
     required init?(coder: NSCoder) {
@@ -101,7 +112,7 @@ final class DetailMovieVC: UIViewController {
         view.addSubview(descriptionTitleLabel)
         view.addSubview(descriptionTextLabel)
         view.addSubview(mainStackView)
-        infoStackView.addArrangeSubviews([dateTitleLabel, dateTextLabel, ratingTitleLabel, ratingTextLabel, popularityTitleLabel, popularityTextLabel])
+        infoStackView.addArrangeSubviews([dateTitleLabel, dateTextLabel, ratingTitleLabel, ratingTextLabel, popularityTitleLabel, popularityTextLabel, genresTitleLabel, genresTextLabel])
         mainStackView.addArrangeSubviews([movieImageView, infoStackView])
         //imageView constraints
         movieImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
@@ -120,7 +131,7 @@ final class DetailMovieVC: UIViewController {
         descriptionTextLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         descriptionTextLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = false    }
     
-    private func configureView(with model: Movie) {
+    private func configureView(with model: Movie, genres: [Genre]) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath)"))
@@ -129,6 +140,12 @@ final class DetailMovieVC: UIViewController {
             self.ratingTextLabel.text = String(format: "%.01f", model.voteAverage)
             self.popularityTextLabel.text = "\(Int(model.popularity))"
             self.descriptionTextLabel.text = model.overview
+            let genreNames: [String] = model.genreIDS.compactMap { genreID in
+                return genres.first { $0.id == genreID }?.name
+            }
+            let genresText = genreNames.joined(separator: ", ")
+            self.genresTextLabel.text = genresText
+
         }
     }
 }

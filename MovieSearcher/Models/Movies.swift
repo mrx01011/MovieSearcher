@@ -13,7 +13,7 @@ struct Movies: Codable {
     let results: [Movie]
 }
 
-// MARK: Result
+// MARK: Movie
 struct Movie: Codable {
     let id: Int
     let overview: String

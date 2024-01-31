@@ -26,6 +26,7 @@
 		FAD888BD2B68F69A00FCB834 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = FAD888BC2B68F69A00FCB834 /* Kingfisher */; };
 		FAD888C42B692AB100FCB834 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888C32B692AB100FCB834 /* CoreDataManager.swift */; };
 		FAD888C62B69469200FCB834 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888C52B69469100FCB834 /* FavoritesViewModel.swift */; };
+		FAD888C82B6A43DE00FCB834 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD888C72B6A43DE00FCB834 /* Genres.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		FAD888B92B68EE2F00FCB834 /* MovieListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModel.swift; sourceTree = "<group>"; };
 		FAD888C32B692AB100FCB834 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		FAD888C52B69469100FCB834 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		FAD888C72B6A43DE00FCB834 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				FAD888B22B68DA2A00FCB834 /* Movies.swift */,
+				FAD888C72B6A43DE00FCB834 /* Genres.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				FAD8889F2B67E51900FCB834 /* ListVC.swift in Sources */,
 				FAD888A82B67EB2000FCB834 /* MovieTableViewCell.swift in Sources */,
 				FAD888AD2B68265C00FCB834 /* DetailMovieVC.swift in Sources */,
+				FAD888C82B6A43DE00FCB834 /* Genres.swift in Sources */,
 				FAD888A12B67E5A000FCB834 /* FavoritesVC.swift in Sources */,
 				FAD888C42B692AB100FCB834 /* CoreDataManager.swift in Sources */,
 				FAD888C62B69469200FCB834 /* FavoritesViewModel.swift in Sources */,
