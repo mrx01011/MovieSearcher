@@ -10,20 +10,22 @@ import CoreData
 
 final class CoreDataManager {
     static let shared = CoreDataManager()
+    private let context: NSManagedObjectContext
     
-    private init() {}
+    private init() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("Unable to get the AppDelegate")
+        }
+        self.context = appDelegate.persistentContainer.viewContext
+    }
     
     func saveMovie(model: Movie, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let context = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest: NSFetchRequest<MovieItem> = MovieItem.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", model.id)
-
+        
         do {
             if let existingMovieItem = try context.fetch(fetchRequest).first {
-                print("Duplicate")
+                print("Duplicate - \(String(describing: existingMovieItem.title))")
             } else {
                 let newItem = MovieItem(context: context)
                 newItem.id = Int32(model.id)
@@ -33,19 +35,16 @@ final class CoreDataManager {
                 newItem.overview = model.overview
                 newItem.releaseDate = model.releaseDate
                 newItem.voteAverage = model.voteAverage
+                newItem.genresIDS = model.genreIDS
             }
             try context.save()
             completion(.success(()))
         } catch {
-            completion(.failure(DatabaseError.failedToSaveData))
+            completion(.failure(CoreDataError.failedToSaveData))
         }
     }
     
     func fetchMovies(completion: @escaping (Result<[Movie],Error>) -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let context = appDelegate.persistentContainer.viewContext
-        
         let request: NSFetchRequest<MovieItem>
         
         request = MovieItem.fetchRequest()
@@ -60,20 +59,17 @@ final class CoreDataManager {
                     posterPath: movieItem.posterPath ?? "",
                     releaseDate: movieItem.releaseDate ?? "",
                     title: movieItem.title ?? "",
-                    voteAverage: movieItem.voteAverage
+                    voteAverage: movieItem.voteAverage,
+                    genreIDS: movieItem.genresIDS ?? []
                 )
             }
             completion(.success(movies))
         } catch {
-            completion(.failure(DatabaseError.failedToFetchData))
+            completion(.failure(CoreDataError.failedToFetchData))
         }
     }
     
     func deleteMovie(model: Movie, completion: @escaping (Result<Void,Error>)->Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let context = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest: NSFetchRequest<MovieItem> = MovieItem.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", model.id)
         
@@ -84,13 +80,45 @@ final class CoreDataManager {
                 completion(.success(()))
             }
         } catch {
-            completion(.failure(DatabaseError.failedToDeleteData))
+            completion(.failure(CoreDataError.failedToDeleteData))
+        }
+    }
+    
+    func saveGenres(models: [Genre], completion: @escaping (Result<Void, Error>) -> Void) {
+        do {
+            for model in models {
+                let genreItem = GenreItem(context: context)
+                genreItem.id = Int32(model.id)
+                genreItem.name = model.name
+            }
+            
+            try context.save()
+            completion(.success(()))
+        } catch {
+            completion(.failure(CoreDataError.failedToSaveData))
+        }
+    }
+    
+    func fetchGenres(completion: @escaping (Result<[Genre], Error>) -> Void) {
+        let request: NSFetchRequest<GenreItem> = GenreItem.fetchRequest()
+        
+        do {
+            let genreItems = try context.fetch(request)
+            let genres = genreItems.map { genreItem -> Genre in
+                return Genre(
+                    id: Int(genreItem.id),
+                    name: genreItem.name ?? ""
+                )
+            }
+            completion(.success(genres))
+        } catch {
+            completion(.failure(CoreDataError.failedToFetchData))
         }
     }
 }
-//MARK: - DataBaseError
+//MARK: - CoreDataError
 extension CoreDataManager {
-    enum DatabaseError: Error {
+    enum CoreDataError: Error {
         case failedToSaveData
         case failedToFetchData
         case failedToDeleteData

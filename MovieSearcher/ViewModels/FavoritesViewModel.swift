@@ -31,6 +31,19 @@ final class FavoritesViewModel {
         }
     }
     
+    func getGenres() -> [Genre] {
+        var genres = [Genre]()
+        CoreDataManager.shared.fetchGenres { result in
+            switch result {
+            case .success(let data):
+                genres = data
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        return genres
+    }
+    
     func fetchData() {
         CoreDataManager.shared.fetchMovies { [weak self] result in
             guard let self else { return }

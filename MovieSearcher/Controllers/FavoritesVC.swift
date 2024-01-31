@@ -9,7 +9,6 @@ import UIKit
 
 final class FavoritesVC: UIViewController {
     private let favoritesViewModel = FavoritesViewModel()
-    private var favorites = [Movie]()
     //MARK: UI elements
     private let favoritesTableView: UITableView = {
         let tableView = UITableView()
@@ -70,6 +69,14 @@ extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let movieData = favoritesViewModel.getMovie(index: indexPath.row) else { return }
+        let genres = favoritesViewModel.getGenres()
+        let detailVC = DetailMovieVC(with: movieData, genres: genres)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
